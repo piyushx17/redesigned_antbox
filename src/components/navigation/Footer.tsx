@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ROUTES } from '@/utils/routes'
+import { assetPath } from '@/utils/assets'
 
 export function Footer() {
   return (
@@ -7,7 +8,7 @@ export function Footer() {
       <div className="container footer-grid">
         <div>
           <Link to={ROUTES.HOME} className="footer-brand" aria-label="AntBox home">
-            <img src="/antbox-logo-white.png" alt="Antbox" />
+            <img src={assetPath('/antbox-logo-white.png')} alt="Antbox" />
           </Link>
           <p className="footer-tagline">
             Future-proof talent infrastructure — from campus readiness to corporate conviction.

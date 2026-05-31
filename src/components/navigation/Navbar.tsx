@@ -5,6 +5,7 @@ import { Button } from '@/components/common/Button'
 import { MobileMenu } from './MobileMenu'
 import { ROUTES } from '@/utils/routes'
 import { cn } from '@/utils/cn'
+import { assetPath } from '@/utils/assets'
 
 const navLinks = [
   { label: 'About', to: ROUTES.ABOUT },
@@ -22,7 +23,7 @@ export function Navbar() {
       <header className="site-nav">
         <div className="container nav-inner">
           <Link to={ROUTES.HOME} className="nav-logo">
-            <img src="/antbox-logo-white.png" alt="Antbox" />
+            <img src={assetPath('/antbox-logo-white.png')} alt="Antbox" />
           </Link>
 
           <nav className="nav-center">

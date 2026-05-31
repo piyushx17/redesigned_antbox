@@ -6,6 +6,7 @@ import { Card } from '@/components/common/Card'
 import { Reveal } from '@/components/common/Reveal'
 import { SectionHeader } from '@/components/common/SectionHeader'
 import { ROUTES } from '@/utils/routes'
+import { assetPath } from '@/utils/assets'
 
 const culturePhotos = [
   'top left',
@@ -101,7 +102,12 @@ export function AboutPage() {
                 >
                   <div
                     className="team-photo"
-                    style={{ '--avatar-position': culturePhotos[i % culturePhotos.length] } as CSSProperties}
+                    style={
+                      {
+                        '--avatar-position': culturePhotos[i % culturePhotos.length],
+                        '--team-image': `url("${assetPath('/about/team-portraits-sheet.png')}")`,
+                      } as CSSProperties
+                    }
                     aria-label={`${member.name} mock profile photo`}
                   />
                   <div className="team-card-face">
@@ -144,7 +150,12 @@ export function AboutPage() {
               <div
                 key={position}
                 className="culture-photo"
-                style={{ '--photo-position': position } as CSSProperties}
+                style={
+                  {
+                    '--photo-position': position,
+                    '--culture-image': `url("${assetPath('/about/culture-mock-sheet.png')}")`,
+                  } as CSSProperties
+                }
                 aria-label={`AntBox culture mock photo ${i + 1}`}
               >
                 <span>{i === 0 ? 'Mentor sprint' : i === 1 ? 'Product review' : i === 2 ? 'Cohort session' : i === 3 ? 'Recruiter screen' : i === 4 ? 'Planning board' : 'Team standup'}</span>

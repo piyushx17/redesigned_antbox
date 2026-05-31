@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { X } from '@phosphor-icons/react'
 import { Button } from '@/components/common/Button'
 import { ROUTES } from '@/utils/routes'
+import { assetPath } from '@/utils/assets'
 
 interface MobileMenuProps {
   open: boolean
@@ -18,7 +19,7 @@ export function MobileMenu({ open, onClose, links }: MobileMenuProps) {
       <div className="mobile-menu-panel">
         <div className="mobile-menu-header">
           <span className="nav-logo">
-            <img src="/antbox-logo-white.png" alt="Antbox" />
+            <img src={assetPath('/antbox-logo-white.png')} alt="Antbox" />
           </span>
           <button type="button" onClick={onClose} aria-label="Close menu">
             <X size={24} />

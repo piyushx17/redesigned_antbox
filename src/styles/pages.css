@@ -1374,7 +1374,7 @@
   width: 100%;
   background-image:
     linear-gradient(180deg, rgba(13, 12, 11, 0.02), rgba(13, 12, 11, 0.35)),
-    url('/about/team-portraits-sheet.png');
+    var(--team-image);
   background-position: var(--avatar-position);
   background-size: 300% 200%;
   border-bottom: 1px solid var(--border);
@@ -1458,7 +1458,7 @@
   overflow: hidden;
   background-image:
     linear-gradient(180deg, rgba(13, 12, 11, 0.04), rgba(13, 12, 11, 0.45)),
-    url('/about/culture-mock-sheet.png');
+    var(--culture-image);
   background-position: var(--photo-position);
   background-size: 300% 200%;
   border: 1px solid var(--border);

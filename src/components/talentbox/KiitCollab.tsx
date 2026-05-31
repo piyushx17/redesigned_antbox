@@ -1,6 +1,7 @@
 import { GraduationCap, Handshake, MapPin } from '@phosphor-icons/react'
 import { Reveal } from '@/components/common/Reveal'
 import { SectionHeader } from '@/components/common/SectionHeader'
+import { assetPath } from '@/utils/assets'
 
 export function KiitCollab() {
   return (
@@ -32,7 +33,7 @@ export function KiitCollab() {
             />
             <div className="kiit-logo-lockup">
               <span>KIIT partnership layer</span>
-              <img src="/antbox-logo-white.png" alt="Antbox" />
+              <img src={assetPath('/antbox-logo-white.png')} alt="Antbox" />
             </div>
             <a
               className="kiit-credit"
