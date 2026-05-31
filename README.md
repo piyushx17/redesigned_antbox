@@ -18,6 +18,9 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173)
+&&
+https://piyushx17.github.io/redesigned_antbox/talentbox?v=1780216788750
+
 
 ## Build
 
