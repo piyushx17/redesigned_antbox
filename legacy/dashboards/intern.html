@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intern Dashboard - AntBox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css"><link rel="stylesheet" href="../dashboard.css">
+</head>
+<body>
+<div class="dash-shell">
+  <aside class="sidebar"><a class="logo" href="../index.html"><span class="logo-mark"></span><span>AntBox</span></a><nav class="side-links" id="nav"></nav><div class="side-user"><div class="avatar">PM</div><div><strong style="color:#fff">Priya</strong><br><a href="../login.html">Logout</a></div></div></aside>
+  <div class="dash-main">
+    <header class="topbar"><div class="breadcrumb">Intern / Dashboard</div><div class="search-wrap"><input class="input" placeholder="Search" /><select><option>All</option></select></div><div class="top-actions"><button class="icon-btn">🔔<span class="badge-dot">2</span></button><div class="avatar">PM</div></div></header>
+    <main class="dash-content">
+      <section class="panel active" data-p="Overview"><h2 style="font-size:40px">Good morning, Priya 👋</h2><div class="stats-grid"><article class="kpi"><p>Tasks Done</p><strong>18/24</strong></article><article class="kpi"><p>Attendance</p><strong>91%</strong></article><article class="kpi"><p>Sprint</p><strong>Growth Marketing</strong></article><article class="kpi"><p>Score</p><strong>87%</strong></article></div><div class="two-col" style="margin-top:12px"><article class="card"><h3 style="font-size:24px;margin-bottom:8px">Today's Tasks</h3><div id="todayTasks"></div></article><article class="card"><h3 style="font-size:24px;margin-bottom:8px">Mentor</h3><p>Rahul Mehta</p><button class="btn">Message</button><h3 style="font-size:24px;margin:12px 0 8px">Activity Feed</h3><div id="feed"></div></article></div></section>
+      <section class="panel" data-p="Tasks"><button class="btn btn-brand" id="addTaskBtn">Add Task</button><form id="addTaskForm" class="hidden card" style="margin:10px 0"><input class="input" placeholder="Task" required><select class="input"><option>high</option><option>medium</option><option>low</option></select><input class="input" type="date" required><button class="btn btn-brand">Save</button></form><div class="kanban"><div class="kan-col"><h3>Todo</h3><div id="todoCol"></div></div><div class="kan-col"><h3>In Progress</h3><div id="progCol"></div></div><div class="kan-col"><h3>Done</h3><div id="doneCol"></div></div></div></section>
+      <section class="panel" data-p="Attendance"><div class="card"><div class="calendar" id="cal"></div><div style="margin-top:10px">18 present, 2 absent, 1 leave</div><button class="btn btn-brand" id="markToday">Mark Today</button></div></section>
+      <section class="panel" data-p="Performance"><div class="stats-grid"><article class="kpi"><p>Communication</p><div class="progress"><span style="width:82%"></span></div></article><article class="kpi"><p>Execution</p><div class="progress"><span style="width:88%"></span></div></article><article class="kpi"><p>Ownership</p><div class="progress"><span style="width:84%"></span></div></article><article class="kpi"><p>Quality</p><div class="progress"><span style="width:86%"></span></div></article></div><article class="card" style="margin-top:12px"><h3 style="font-size:24px">Monthly Trend</h3><div class="chart"><div class="bar" style="height:35%"></div><div class="bar" style="height:44%"></div><div class="bar" style="height:58%"></div><div class="bar" style="height:66%"></div><div class="bar" style="height:72%"></div></div></article></section>
+      <section class="panel" data-p="Workspace"><div class="dash-grid"><article class="card"><strong>Pinned Announcement</strong><p>Demo day prep starts Monday.</p></article><article class="card"><h3 style="font-size:24px">Team Feed</h3><div id="tfeed"></div></article><article class="card"><h3 style="font-size:24px">Members</h3><p>Riya 🟢, Dev 🟢, Omar 🟢, Nia 🟢</p></article><article class="card"><h3 style="font-size:24px">Sprint Progress</h3><div class="progress"><span style="width:74%"></span></div></article></div></section>
+      <section class="panel" data-p="Settings"><article class="card"><div style="display:flex;justify-content:space-between"><span>Email notifications</span><button class="toggle on"></button></div></article></section>
+    </main>
+  </div>
+</div>
+<script>
+const items=["Overview","Tasks","Attendance","Performance","Workspace","Settings"];
+const tasks={Todo:[{n:"Campaign plan",p:"high",d:"2026-05-30"},{n:"Landing copy",p:"medium",d:"2026-06-01"},{n:"Research",p:"low",d:"2026-06-02"}],Progress:[{n:"UTM setup",p:"medium",d:"2026-05-29"},{n:"Email draft",p:"low",d:"2026-05-30"}],Done:[{n:"Persona doc",p:"high",d:"2026-05-18"},{n:"Competitor audit",p:"medium",d:"2026-05-20"},{n:"Brief",p:"low",d:"2026-05-22"},{n:"Hooks list",p:"medium",d:"2026-05-24"}]};
+const nav=document.getElementById("nav");
+items.forEach((n,i)=>{const a=document.createElement("a");a.href="#";a.className="side-link"+(i===0?" active":"");a.innerHTML=`<svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M12 4v16" stroke-width="1.8"/></svg><span>${n}</span>`;a.onclick=(e)=>{e.preventDefault();document.querySelectorAll(".side-link").forEach(x=>x.classList.remove("active"));a.classList.add("active");document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));document.querySelector(`[data-p="${n}"]`).classList.add("active");};nav.appendChild(a);});
+function card(t,k,i){return `<div class="task-card"><div class="task-title">${t.n}</div><span class="priority ${t.p}">${t.p}</span><small>${t.d}</small><div style="margin-top:8px"><button class="btn" data-m="${k}-${i}">Move</button></div></div>`;}
+function renderTasks(){todoCol.innerHTML=tasks.Todo.map((t,i)=>card(t,"Todo",i)).join("");progCol.innerHTML=tasks.Progress.map((t,i)=>card(t,"Progress",i)).join("");doneCol.innerHTML=tasks.Done.map((t,i)=>card(t,"Done",i)).join("");}
+document.querySelector(".kanban").onclick=(e)=>{const m=e.target.dataset.m;if(!m)return;const[k,i]=m.split("-");const t=tasks[k].splice(+i,1)[0];if(k==="Todo")tasks.Progress.push(t);else if(k==="Progress")tasks.Done.push(t);else tasks.Done.push(t);renderTasks();};
+addTaskBtn.onclick=()=>addTaskForm.classList.toggle("hidden");
+addTaskForm.onsubmit=(e)=>{e.preventDefault();tasks.Todo.push({n:e.target[0].value,p:e.target[1].value,d:e.target[2].value});e.target.reset();renderTasks();};
+todayTasks.innerHTML=["Post LinkedIn update","Finalize ad set","Review CTR dashboard"].map(x=>`<label style="display:block"><input type="checkbox"> <span>${x}</span></label>`).join("");
+todayTasks.onchange=(e)=>{if(e.target.type==="checkbox"){e.target.nextElementSibling.style.textDecoration=e.target.checked?"line-through":"none";}};
+feed.innerHTML=["10:00 Submitted weekly report","11:30 Updated copy","13:20 Attended mentor session","16:10 Completed task","17:30 Sprint sync"].map(x=>`<p>${x}</p>`).join("");
+tfeed.innerHTML=["Priya moved task to progress","Rahul commented on campaign","Team standup completed","Asset review done","Planning board updated"].map(x=>`<p>${x}</p>`).join("");
+for(let d=1;d<=35;d++){const type=d%7===0?"weekend":d%11===0?"absent":d%9===0?"leave":"present";cal.innerHTML+=`<div class="day">${d<=31?d:""} ${d<=31?`<span class="dot ${type}"></span>`:""}</div>`;}
+markToday.onclick=()=>{const cells=[...document.querySelectorAll(".day")].filter(x=>x.textContent.trim().startsWith(String(new Date().getDate())));if(cells[0])cells[0].innerHTML=`${new Date().getDate()} <span class="dot present"></span>`;};
+document.querySelectorAll(".toggle").forEach(t=>t.onclick=()=>t.classList.toggle("on"));
+renderTasks();
+</script>
+</body>
+</html>

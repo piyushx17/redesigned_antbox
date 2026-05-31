@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - AntBox</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="auth-wrap">
+      <section class="auth-card reveal">
+        <a class="logo" href="index.html"><span class="logo-mark"></span><span>AntBox</span></a>
+        <div class="step-dots"><span class="step-dot active"></span><span class="step-dot"></span><span class="step-dot"></span></div>
+        <div id="step1">
+          <h1 style="font-size: 48px">Choose your role</h1>
+          <div class="role-grid" id="signupRoles">
+            <button class="role-card" data-role="student">🎓<br />Student</button>
+            <button class="role-card" data-role="intern">💼<br />Intern</button>
+            <button class="role-card" data-role="mentor">👤<br />Mentor</button>
+            <button class="role-card" data-role="recruiter">🔍<br />Recruiter</button>
+            <button class="role-card" data-role="admin">⚙️<br />Admin</button>
+          </div>
+        </div>
+        <form id="step2" class="hidden" style="display: grid; gap: 10px">
+          <h1 style="font-size: 48px">Create account</h1>
+          <input class="input" required id="name" placeholder="Full Name" />
+          <input class="input" required type="email" placeholder="Email" />
+          <input class="input" required placeholder="College/Company" />
+          <input class="input" required type="password" id="pw" placeholder="Password" />
+          <input class="input" required type="password" id="cpw" placeholder="Confirm Password" />
+        </form>
+        <div id="step3" class="hidden" style="text-align: center">
+          <div style="font-size: 56px; color: var(--brand)">✓</div>
+          <h1 id="welcome" style="font-size: 44px">Welcome to AntBox!</h1>
+          <button class="btn btn-brand" id="goDash">Go to Dashboard</button>
+        </div>
+        <div class="btn-row" style="margin-top: 14px">
+          <button class="btn btn-ghost hidden" id="backBtn" type="button">Back</button>
+          <button class="btn btn-brand" id="nextBtn" type="button">Next</button>
+        </div>
+      </section>
+    </main>
+    <script src="components.js"></script>
+    <script>
+      const dots = document.querySelectorAll(".step-dot");
+      const steps = [document.getElementById("step1"), document.getElementById("step2"), document.getElementById("step3")];
+      const next = document.getElementById("nextBtn");
+      const back = document.getElementById("backBtn");
+      let i = 0;
+      let role = "";
+      const map = {
+        student: "dashboards/student.html",
+        intern: "dashboards/intern.html",
+        mentor: "dashboards/mentor.html",
+        recruiter: "dashboards/recruiter.html",
+        admin: "dashboards/admin.html"
+      };
+      function render() {
+        steps.forEach((s, idx) => s.classList.toggle("hidden", idx !== i));
+        dots.forEach((d, idx) => d.classList.toggle("active", idx <= i));
+        back.classList.toggle("hidden", i === 0);
+        next.classList.toggle("hidden", i === 2);
+      }
+      document.getElementById("signupRoles").addEventListener("click", (e) => {
+        const card = e.target.closest(".role-card");
+        if (!card) return;
+        document.querySelectorAll(".role-card").forEach((el) => el.classList.remove("active"));
+        card.classList.add("active");
+        role = card.dataset.role;
+      });
+      next.addEventListener("click", () => {
+        if (i === 0 && !role) return;
+        if (i === 1) {
+          const pw = document.getElementById("pw").value;
+          const cpw = document.getElementById("cpw").value;
+          if (!pw || pw !== cpw) return;
+          document.getElementById("welcome").textContent = `Welcome to AntBox, ${document.getElementById("name").value || "there"}!`;
+          localStorage.setItem("antboxRole", role);
+        }
+        i = Math.min(2, i + 1);
+        render();
+      });
+      back.addEventListener("click", () => {
+        i = Math.max(0, i - 1);
+        render();
+      });
+      document.getElementById("goDash").addEventListener("click", () => {
+        window.location.href = map[role] || "dashboards/student.html";
+      });
+      render();
+    </script>
+  </body>
+</html>

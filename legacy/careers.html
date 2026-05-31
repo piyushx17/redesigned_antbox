@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Careers - AntBox</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-offset">
+    <div id="nav"></div>
+    <main>
+      <section class="section">
+        <div class="container reveal">
+          <p class="section-label">Careers</p>
+          <h1 style="font-size: clamp(44px, 7vw, 78px); max-width: 12ch">Build the future of <em>talent</em>. With us.</h1>
+        </div>
+      </section>
+
+      <section class="section surface-2">
+        <div class="container grid-3 reveal">
+          <article class="card"><h3 style="font-size: 30px">Ownership</h3><p>Small teams, high trust, real accountability.</p></article>
+          <article class="card"><h3 style="font-size: 30px">Depth</h3><p>We prefer meaningful execution over performative busyness.</p></article>
+          <article class="card"><h3 style="font-size: 30px">Learning</h3><p>Curiosity and craft are core to how we build.</p></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container reveal">
+          <p class="section-label">Open Roles</p>
+          <div class="tabs" id="roleTabs">
+            <button class="tab active" data-dept="All">All</button>
+            <button class="tab" data-dept="Engineering">Engineering</button>
+            <button class="tab" data-dept="Design">Design</button>
+            <button class="tab" data-dept="Growth">Growth</button>
+            <button class="tab" data-dept="Operations">Operations</button>
+          </div>
+          <div id="rolesList" class="grid-2"></div>
+        </div>
+      </section>
+
+      <section class="section surface-2">
+        <div class="container reveal">
+          <p class="section-label">Perks</p>
+          <div class="grid-3">
+            <article class="card"><h3 style="font-size: 26px">Remote-friendly</h3><p>Flexible setup with async-first rituals.</p></article>
+            <article class="card"><h3 style="font-size: 26px">Learning budget</h3><p>Courses, books, and conference support.</p></article>
+            <article class="card"><h3 style="font-size: 26px">Health cover</h3><p>Comprehensive medical benefits.</p></article>
+            <article class="card"><h3 style="font-size: 26px">Mentor access</h3><p>Internal experts across product and GTM.</p></article>
+            <article class="card"><h3 style="font-size: 26px">Quarterly retreats</h3><p>In-person planning and team building.</p></article>
+            <article class="card"><h3 style="font-size: 26px">Outcome bonuses</h3><p>Aligned rewards tied to measurable impact.</p></article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="footer"></div>
+    <script src="components.js"></script>
+    <script>
+      const roles = [
+        { title: "Frontend Engineer", dept: "Engineering", location: "Bengaluru", type: "Full-time" },
+        { title: "Product Designer", dept: "Design", location: "Remote", type: "Full-time" },
+        { title: "Growth Associate", dept: "Growth", location: "Mumbai", type: "Remote" },
+        { title: "Ops Program Manager", dept: "Operations", location: "Delhi", type: "Full-time" },
+        { title: "Backend Engineer", dept: "Engineering", location: "Remote", type: "Full-time" }
+      ];
+      let filter = "All";
+      const list = document.getElementById("rolesList");
+
+      function renderRoles() {
+        list.innerHTML = "";
+        roles.filter((r) => filter === "All" || r.dept === filter).forEach((role, idx) => {
+          const wrap = document.createElement("article");
+          wrap.className = "card";
+          wrap.innerHTML = `
+            <h3 style="font-size:28px">${role.title}</h3>
+            <p style="margin:8px 0 12px"><span class="badge">${role.dept}</span> ${role.location} • ${role.type}</p>
+            <button class="btn btn-brand" data-apply="${idx}">Apply</button>
+            <div class="hidden" id="form-${idx}" style="margin-top:12px">
+              <form class="grid-2 apply-form">
+                <input class="input" required placeholder="Name" />
+                <input class="input" required type="email" placeholder="Email" />
+                <input class="input" placeholder="Resume URL" />
+                <textarea class="input" placeholder="Cover note"></textarea>
+                <button class="btn btn-brand" type="submit">Submit Application</button>
+              </form>
+            </div>
+          `;
+          list.appendChild(wrap);
+        });
+      }
+
+      document.getElementById("roleTabs").addEventListener("click", (e) => {
+        const btn = e.target.closest(".tab");
+        if (!btn) return;
+        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+        btn.classList.add("active");
+        filter = btn.dataset.dept;
+        renderRoles();
+      });
+
+      list.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-apply]");
+        if (!btn) return;
+        const box = document.getElementById(`form-${btn.dataset.apply}`);
+        box.classList.toggle("hidden");
+      });
+
+      list.addEventListener("submit", (e) => {
+        const form = e.target.closest(".apply-form");
+        if (!form) return;
+        e.preventDefault();
+        form.outerHTML = `<div class="success">Application received ✓</div>`;
+      });
+
+      renderRoles();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard — AntBox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../dashboard.css" />
+</head>
+<body>
+<div class="dash-shell">
+  <aside class="sidebar">
+    <a class="logo" href="../index.html"><span class="logo-mark"></span><span style="font-weight:800;letter-spacing:0.06em;font-size:14px">ANTBOX</span></a>
+    <nav class="side-links" id="sideNav"></nav>
+    <div class="side-user">
+      <div class="avatar">AR</div>
+      <div><strong>Aarav</strong><br><a href="../login.html">Logout</a></div>
+    </div>
+  </aside>
+
+  <div class="dash-main">
+    <header class="topbar">
+      <div class="breadcrumb">Student / Dashboard</div>
+      <div class="search-wrap">
+        <input class="input" id="globalSearch" placeholder="Search company..." style="max-width:260px" />
+        <select style="height:38px;width:120px"><option>All</option><option>Applications</option></select>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="badge-dot">3</span>
+        </button>
+        <div class="avatar">AR</div>
+      </div>
+    </header>
+
+    <main class="dash-content">
+
+      <!-- OVERVIEW -->
+      <section class="panel active" data-panel="Overview">
+        <div class="welcome-banner">
+          <div style="position:relative;z-index:1">
+            <h2>Good morning, <em><span id="welcomeName">Aarav</span></em></h2>
+            <p>You're 72% through this sprint. 2 upcoming interviews this week.</p>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <article class="kpi"><p>Applications</p><strong>12</strong></article>
+          <article class="kpi"><p>Assessments Done</p><strong>4</strong></article>
+          <article class="kpi"><p>Interviews</p><strong>2</strong></article>
+          <article class="kpi"><p>Readiness</p><strong>88<span style="font-size:24px">%</span></strong></article>
+        </div>
+        <div class="two-col" style="margin-top:16px">
+          <article class="card">
+            <h3 style="font-size:22px;font-family:var(--font-sans);font-weight:700;margin-bottom:14px;letter-spacing:0.02em">Recent Applications</h3>
+            <table class="table" id="recentApps"></table>
+          </article>
+          <article class="card">
+            <h3 style="font-size:22px;font-family:var(--font-sans);font-weight:700;margin-bottom:14px;letter-spacing:0.02em">Upcoming</h3>
+            <div id="upcoming"></div>
+            <div style="margin-top:16px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;color:var(--muted);font-weight:600;letter-spacing:0.06em;text-transform:uppercase">Profile Completion</span><span style="font-size:12px;color:var(--amber);font-weight:700">72%</span></div>
+              <div class="progress"><span style="width:72%"></span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- PROFILE -->
+      <section class="panel" data-panel="Profile">
+        <article class="card dash-grid">
+          <div class="avatar" style="width:64px;height:64px;font-size:22px">AR</div>
+          <input class="input" id="nameField" value="Aarav Rao" />
+          <input class="input" value="aarav@mail.com" />
+          <input class="input" value="+91 9999999999" />
+          <input class="input" value="IIT Delhi" />
+          <input class="input" value="Final Year" />
+          <input class="input" value="Computer Science" />
+          <div>
+            <p style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Skills</p>
+            <div id="skills"></div>
+            <input class="input" id="skillInput" placeholder="Add skill and press Enter" style="margin-top:8px" />
+          </div>
+          <div class="card" style="padding:14px;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--muted-2)">Aarav_Resume_2026.pdf</span>
+            <button class="btn" style="padding:6px 14px;font-size:12px">Re-upload</button>
+          </div>
+          <button class="btn btn-brand" id="saveProfile">Save Profile</button>
+        </article>
+      </section>
+
+      <!-- APPLICATIONS -->
+      <section class="panel" data-panel="Applications">
+        <div class="tabs" id="appTabs">
+          <button class="tab active" data-filter="All">All</button>
+          <button class="tab" data-filter="Applied">Applied</button>
+          <button class="tab" data-filter="Shortlisted">Shortlisted</button>
+          <button class="tab" data-filter="Rejected">Rejected</button>
+          <button class="tab" data-filter="Offered">Offered</button>
+        </div>
+        <input class="input" id="appSearch" placeholder="Search by company" style="margin-bottom:12px" />
+        <article class="card" style="padding:0;overflow:hidden">
+          <table class="table" id="appsTable" style="margin:0"></table>
+        </article>
+      </section>
+
+      <!-- ASSESSMENTS -->
+      <section class="panel" data-panel="Assessments">
+        <div id="assessmentList" class="dash-grid"></div>
+        <div id="mcqBox" class="card hidden" style="margin-top:12px"></div>
+      </section>
+
+      <!-- INTERVIEWS -->
+      <section class="panel" data-panel="Interviews">
+        <form id="interviewForm" class="grid-2 card" style="margin-bottom:14px">
+          <input class="input" required placeholder="Company" />
+          <input class="input" required placeholder="Role" />
+          <input class="input" required type="date" />
+          <input class="input" required type="time" />
+          <button class="btn btn-brand" type="submit">Add Interview</button>
+        </form>
+        <div id="interviewList" class="grid-2"></div>
+      </section>
+
+      <!-- CAREER LAB -->
+      <section class="panel" data-panel="Career Lab">
+        <div class="two-col">
+          <article class="card dash-grid">
+            <h3 style="font-size:24px;font-family:var(--font-sans);font-weight:700">ATS Resume Analyzer</h3>
+            <button class="btn" id="uploadResume">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Upload Resume
+            </button>
+            <p id="resumeName" style="font-size:13px;color:var(--muted)">No file uploaded</p>
+            <textarea class="input" id="jd" placeholder="Paste Job Description"></textarea>
+            <button class="btn btn-brand" id="analyzeBtn">Analyze Match</button>
+          </article>
+          <article class="card" id="analysisOut">
+            <p style="color:var(--muted)">Run analysis to see ATS score and suggestions.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- MOCK INTERVIEW -->
+      <section class="panel" data-panel="Mock Interview">
+        <div class="tabs" id="topicTabs">
+          <button class="tab active" data-topic="HR">HR</button>
+          <button class="tab" data-topic="Technical">Technical</button>
+          <button class="tab" data-topic="Product">Product</button>
+        </div>
+        <button class="btn btn-brand" id="startMock">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Start Session
+        </button>
+        <div id="mockArea" class="hidden card" style="margin-top:12px"></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="panel" data-panel="Settings">
+        <article class="card dash-grid" style="max-width:500px">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span>Email Notifications</span><button class="toggle on"></button></div>
+          <div style="display:flex;justify-content:space-between;align-items:center"><span>Assessment Alerts</span><button class="toggle"></button></div>
+          <form id="pwForm" class="dash-grid">
+            <input class="input" type="password" placeholder="Old Password" />
+            <input class="input" type="password" placeholder="New Password" />
+            <button class="btn btn-brand">Update Password</button>
+          </form>
+          <p id="pwMsg" class="success hidden">Password updated ✓</p>
+        </article>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+const NAV_ICONS = {
+  'Overview': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>`,
+  'Profile': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>`,
+  'Applications': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>`,
+  'Assessments': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
+  'Interviews': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>`,
+  'Career Lab': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0h10m-10 0H3m0 0v4a2 2 0 0 0 2 2h4m10-6v4a2 2 0 0 1-2 2h-4m0 0H9"/></svg>`,
+  'Mock Interview': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+  'Settings': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`
+};
+const navItems = Object.keys(NAV_ICONS);
+const apps = [
+  { company:'Acme', role:'SDE Intern', status:'Applied', date:'2026-05-11' },
+  { company:'Zenith', role:'Analyst', status:'Shortlisted', date:'2026-05-12' },
+  { company:'Nova', role:'Product Intern', status:'Rejected', date:'2026-05-13' },
+  { company:'Blink', role:'Data Intern', status:'Offered', date:'2026-05-14' },
+  { company:'Orbit', role:'Backend Intern', status:'Applied', date:'2026-05-16' }
+];
+const assessments = [
+  { company:'Acme', type:'Aptitude', status:'Pending' },
+  { company:'Blink', type:'Technical', status:'Done' },
+  { company:'Nova', type:'Case', status:'Done' }
+];
+const interviews = [
+  { company:'Acme', role:'SDE Intern', date:'2026-05-30', time:'10:00' },
+  { company:'Zenith', role:'Analyst', date:'2026-06-02', time:'14:30' },
+  { company:'Blink', role:'Data Intern', date:'2026-06-05', time:'11:45' }
+];
+let skills = ['JavaScript','React','SQL'];
+let appFilter = 'All';
+let mockIdx = 0;
+const mockQs = ['Tell me about yourself.','Describe a challenge you solved.','Why this role?'];
+let currentTopic = 'HR';
+
+const sideNav = document.getElementById('sideNav');
+navItems.forEach((n, i) => {
+  const a = document.createElement('a');
+  a.href = '#';
+  a.className = 'side-link' + (i === 0 ? ' active' : '');
+  a.innerHTML = NAV_ICONS[n] + `<span>${n}</span>`;
+  a.onclick = e => {
+    e.preventDefault();
+    document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
+    a.classList.add('active');
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelector(`[data-panel="${n}"]`).classList.add('active');
+  };
+  sideNav.appendChild(a);
+});
+
+function renderRecent() {
+  document.getElementById('recentApps').innerHTML = `<tr><th>Company</th><th>Role</th><th>Status</th></tr>` + apps.slice(0,4).map(a => `<tr><td>${a.company}</td><td>${a.role}</td><td><span class="status ${a.status.toLowerCase()}">${a.status}</span></td></tr>`).join('');
+  document.getElementById('upcoming').innerHTML = assessments.filter(a=>a.status==='Pending').map(a => `<div style="padding:10px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;display:flex;justify-content:space-between"><span style="font-size:13px;color:var(--cream)">${a.company}</span><span class="badge badge-amber">${a.type}</span></div>`).join('');
+}
+function renderSkills() {
+  document.getElementById('skills').innerHTML = skills.map((s, i) => `<span class="badge" style="margin:0 4px 4px 0">${s} <button data-s="${i}" style="border:0;background:transparent;cursor:pointer;color:var(--muted);margin-left:4px">×</button></span>`).join('');
+}
+function renderApps() {
+  const q = document.getElementById('appSearch').value.toLowerCase();
+  const rows = apps.filter(a => (appFilter === 'All' || a.status === appFilter) && a.company.toLowerCase().includes(q));
+  document.getElementById('appsTable').innerHTML = `<tr><th>Company</th><th>Role</th><th>Date</th><th>Status</th><th>Action</th></tr>` + rows.map((a,i) => `<tr><td>${a.company}</td><td>${a.role}</td><td>${a.date}</td><td><span class="status ${a.status.toLowerCase()}">${a.status}</span></td><td><button class="btn" data-v="${i}" style="padding:4px 12px;font-size:11px">View</button></td></tr><tr class="hidden" id="d-${i}"><td colspan="5" style="padding:14px;color:var(--muted-2);font-size:13px">JD: Build scalable products at high velocity. Timeline: Applied → Screened → Final.</td></tr>`).join('');
+}
+function renderAssessments() {
+  document.getElementById('assessmentList').innerHTML = assessments.map((a,i) => `<article class="card" style="display:flex;justify-content:space-between;align-items:center"><div><h3 style="font-size:18px;font-family:var(--font-sans);font-weight:700;margin-bottom:4px">${a.company}</h3><p>${a.type} Assessment</p></div>${a.status === 'Pending' ? `<button class="btn btn-brand" data-start="${i}" style="padding:8px 18px;font-size:12px">Start</button>` : `<span class="badge badge-amber">Done ✓</span>`}</article>`).join('');
+}
+function renderInterviews() {
+  document.getElementById('interviewList').innerHTML = interviews.map(i => `<article class="card"><div style="display:flex;justify-content:space-between;align-items:start"><div><h3 style="font-size:20px;font-family:var(--font-sans);font-weight:700;margin-bottom:4px">${i.company}</h3><p>${i.role}</p></div><span class="badge badge-amber">${i.date}</span></div><div style="margin-top:8px;font-size:12px;color:var(--muted);font-family:var(--font-mono)">${i.time}</div></article>`).join('');
+}
+
+document.getElementById('skills').onclick = e => {
+  if (e.target.dataset.s !== undefined) { skills.splice(+e.target.dataset.s,1); renderSkills(); }
+};
+document.getElementById('skillInput').addEventListener('keydown', e => {
+  if (e.key==='Enter' && e.target.value.trim()) { e.preventDefault(); skills.push(e.target.value.trim()); e.target.value=''; renderSkills(); }
+});
+document.getElementById('saveProfile').onclick = () => {
+  document.getElementById('welcomeName').textContent = document.getElementById('nameField').value.split(' ')[0];
+};
+document.getElementById('appTabs').onclick = e => {
+  const t = e.target.closest('.tab'); if (!t) return;
+  document.querySelectorAll('#appTabs .tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active'); appFilter = t.dataset.filter; renderApps();
+};
+document.getElementById('appSearch').oninput = renderApps;
+document.getElementById('appsTable').onclick = e => {
+  if (!e.target.dataset.v) return;
+  document.getElementById(`d-${e.target.dataset.v}`).classList.toggle('hidden');
+};
+document.getElementById('assessmentList').onclick = e => {
+  const idx = e.target.dataset.start; if (idx === undefined) return;
+  const box = document.getElementById('mcqBox');
+  box.classList.remove('hidden');
+  box.innerHTML = `<h3 style="font-size:22px;font-family:var(--font-sans);font-weight:700;margin-bottom:14px">Assessment — ${assessments[idx].company}</h3><form id="mcq" class="dash-grid"><div style="display:grid;gap:8px"><label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="radio" name="q1" value="1" required> Q1 Correct</label><label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="radio" name="q1" value="0"> Q1 Wrong</label><label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="radio" name="q2" value="1" required> Q2 Correct</label><label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="radio" name="q2" value="0"> Q2 Wrong</label><label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="radio" name="q3" value="1" required> Q3 Correct</label><label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="radio" name="q3" value="0"> Q3 Wrong</label></div><button class="btn btn-brand">Submit</button></form>`;
+};
+document.getElementById('mcqBox').addEventListener('submit', e => {
+  if (e.target.id !== 'mcq') return;
+  e.preventDefault();
+  const data = new FormData(e.target);
+  const score = [...data.values()].reduce((a,b) => a + +b, 0);
+  e.target.outerHTML = `<div class="success">Score: ${score}/3 (${Math.round(score/3*100)}%) — Well done!</div>`;
+});
+document.getElementById('interviewForm').onsubmit = e => {
+  e.preventDefault();
+  interviews.unshift({ company:e.target[0].value, role:e.target[1].value, date:e.target[2].value, time:e.target[3].value });
+  e.target.reset(); renderInterviews();
+};
+document.getElementById('uploadResume').onclick = () => document.getElementById('resumeName').textContent = 'resume.pdf loaded';
+document.getElementById('analyzeBtn').onclick = () => {
+  document.getElementById('analysisOut').innerHTML = `<div style="display:flex;justify-content:center;margin-bottom:20px"><div class="ring" style="--pct:87%" data-label="87%"></div></div><p style="margin-bottom:8px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Matched Keywords</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px"><span class="badge badge-amber">JavaScript</span><span class="badge badge-amber">SQL</span><span class="badge badge-amber">React</span></div><p style="margin-bottom:8px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Missing</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px"><span class="badge">System Design</span><span class="badge">Node.js</span></div><ul class="list-clean" style="font-size:13px"><li>Use quantified impact bullets (e.g. "improved by 40%")</li><li>Align project titles to JD language</li><li>Add API design examples</li></ul>`;
+};
+document.getElementById('topicTabs').onclick = e => {
+  const t = e.target.closest('.tab'); if (!t) return;
+  document.querySelectorAll('#topicTabs .tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active'); currentTopic = t.dataset.topic;
+};
+document.getElementById('startMock').onclick = () => {
+  mockIdx = 0;
+  const area = document.getElementById('mockArea');
+  area.classList.remove('hidden');
+  area.innerHTML = `<p style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);margin-bottom:8px">${currentTopic} Interview</p><h3 style="font-size:22px;font-family:var(--font-sans);font-weight:700;margin-bottom:14px" id="q">${mockQs[mockIdx]}</h3><textarea class="input" id="ans" placeholder="Type your answer..."></textarea><button class="btn btn-brand" id="nextQ" style="margin-top:10px">Next Question →</button>`;
+};
+document.getElementById('mockArea').onclick = e => {
+  if (e.target.id !== 'nextQ') return;
+  mockIdx++;
+  if (mockIdx < mockQs.length) document.getElementById('q').textContent = mockQs[mockIdx];
+  else e.currentTarget.innerHTML = `<div class="success" style="font-size:14px">Session complete — Communication 8/10 · Clarity 7/10 · Domain 8/10<br><span style="color:var(--muted-2);font-size:12px;margin-top:4px;display:block">Tip: Use the STAR method for sharper, memorable responses.</span></div>`;
+};
+document.querySelectorAll('.toggle').forEach(t => t.onclick = () => t.classList.toggle('on'));
+document.getElementById('pwForm').onsubmit = e => { e.preventDefault(); document.getElementById('pwMsg').classList.remove('hidden'); };
+document.getElementById('globalSearch').oninput = e => { document.getElementById('appSearch').value = e.target.value; };
+
+renderRecent(); renderSkills(); renderApps(); renderAssessments(); renderInterviews();
+</script>
+</body>
+</html>

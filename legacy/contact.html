@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - AntBox</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-offset">
+    <div id="nav"></div>
+    <main>
+      <section class="section">
+        <div class="container reveal">
+          <p class="section-label">Contact</p>
+          <h1 style="font-size: clamp(42px, 6vw, 74px)">Let's talk.</h1>
+        </div>
+      </section>
+      <section class="section" style="padding-top: 0">
+        <div class="container split reveal">
+          <div class="card">
+            <form id="contactForm" class="dash-grid">
+              <input class="input" required placeholder="Name" />
+              <input class="input" type="email" required placeholder="Email" />
+              <select required><option value="">Subject</option><option>Partnership</option><option>Press</option><option>Student</option><option>Other</option></select>
+              <textarea class="input" required placeholder="Message"></textarea>
+              <button class="btn btn-brand" type="submit">Send</button>
+            </form>
+            <p id="contactMsg" class="success hidden" style="margin-top: 10px">Message sent ✓</p>
+          </div>
+          <div class="dash-grid">
+            <article class="card"><h3 style="font-size: 28px">Email</h3><p>hello@theantbox.com</p></article>
+            <article class="card"><h3 style="font-size: 28px">LinkedIn</h3><p>linkedin.com/company/theantbox</p></article>
+            <article class="card"><h3 style="font-size: 28px">Location</h3><p>Bengaluru, India</p></article>
+            <div class="socials"><a href="#">in</a><a href="#">x</a><a href="#">ig</a></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="footer"></div>
+    <script src="components.js"></script>
+    <script>
+      document.getElementById("contactForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        document.getElementById("contactMsg").classList.remove("hidden");
+        e.target.reset();
+      });
+    </script>
+  </body>
+</html>
